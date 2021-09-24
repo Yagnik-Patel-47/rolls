@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: Roboto, sans-serif;
+}
+
+#__next {
+  height: 100%;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+button {
+  outline: none;
+}
+
+video::-webkit-media-controls {
+  display: none;
+}
+
+.bg-blur {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10.5px);
+  -webkit-backdrop-filter: blur(10.5px);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.drawer-styles {
+  background: #1f2937;
+  height: 60%;
+  padding: 1rem 2rem;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+#tabpanel-likes,
+#tabpanel-comments {
+  height: 100%;
+}

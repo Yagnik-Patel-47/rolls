@@ -1,0 +1,24 @@
+{
+  "name": "Rolls",
+  "short_name": "Rolls",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/android-chrome-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "theme_color": "#111",
+  "background_color": "#222",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "description": "A social media vidoe app having features similar to Instagram Reels."
+}
