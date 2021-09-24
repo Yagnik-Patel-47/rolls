@@ -54,11 +54,11 @@ video::-webkit-media-controls {
 }
 
 .drawer-styles {
-  background: #1f2937;
-  height: 60%;
-  padding: 1rem 2rem;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  background: #1f2937 !important;
+  height: 60% !important;
+  padding: 1rem 2rem !important;
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
 }
 
 #tabpanel-likes,
