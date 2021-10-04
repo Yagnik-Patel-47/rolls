@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import AppFooter from "../components/AppFooter";
 import VideoContainer from "../components/VideoContainer";
 import { initData } from "../redux/profile";
@@ -7,10 +7,11 @@ import { auth, db } from "../firebase";
 import { initRolls } from "../redux/rolls";
 import { useAppSelector, useAppDispatch } from "../utils/reduxHooks";
 import { Button, Typography } from "@mui/material";
+import { setUserInteracted } from "../redux/interacted";
 
 const Home: FC = () => {
   const rolls = useAppSelector((store) => store.rolls);
-  const [userInteracted, setUserInteracted] = useState<boolean>(false);
+  const userInteracted = useAppSelector((store) => store.interacted);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -37,6 +38,7 @@ const Home: FC = () => {
     <>
       <Head>
         <title>Rolls It</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       {!userInteracted && (
         <div className="flex justify-center items-center h-full flex-col bg-gray-800 text-white space-y-4">
@@ -46,7 +48,7 @@ const Home: FC = () => {
           <Button
             variant="contained"
             style={{ color: "white", background: "#1976d2" }}
-            onClick={() => setUserInteracted(true)}
+            onClick={() => dispatch(setUserInteracted(true))}
           >
             Access Audio
           </Button>

@@ -1,4 +1,4 @@
-import { Typography, LinearProgress, Backdrop } from "@mui/material";
+import { Typography, LinearProgress, Backdrop, Button } from "@mui/material";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { db, storage, auth } from "../firebase";
@@ -51,10 +51,11 @@ const CreateRoll = () => {
 
   return (
     <>
+      <Head>
+        <title>Create Roll</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <div className="flex bg-gray-800 h-full flex-col items-center p-6 space-y-8 text-white w-full">
-        <Head>
-          <title>Create Roll</title>
-        </Head>
         <Typography variant="h6">Create Your Roll.</Typography>
         <input
           type="file"
@@ -90,29 +91,26 @@ const CreateRoll = () => {
             <video
               style={{ objectFit: "fill", width: "100%", height: "100%" }}
               src={preview}
-              muted
               autoPlay
               loop
             ></video>
           </div>
         )}
-        {roll && (
-          <button
-            className="bg-blue-500
-        hover:bg-blue-700
-        text-white
-        font-bold
-        py-2
-        px-4
-        rounded
-        focus:outline-none focus:shadow-outline
-        uppercase
-        font-roboto"
-            onClick={handleSubmit}
+        <div className="flex w-full justify-around">
+          {roll && (
+            <Button onClick={handleSubmit} variant="contained" size="large">
+              Submit
+            </Button>
+          )}
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => router.push("/")}
+            size="large"
           >
-            Submit
-          </button>
-        )}
+            Cancel
+          </Button>
+        </div>
       </div>
       {showProgress && (
         <Backdrop

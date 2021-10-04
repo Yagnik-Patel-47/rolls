@@ -5,7 +5,6 @@ const initialState: Profile = {
   fullName: "",
   email: "",
   photo: "",
-  rolls: [],
   id: "",
 };
 
@@ -18,7 +17,6 @@ const profileSlice = createSlice({
         fullName: action.payload.fullName,
         email: action.payload.email,
         photo: action.payload.photo,
-        rolls: action.payload.rolls,
         id: action.payload.id,
       };
     },

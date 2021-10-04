@@ -37,7 +37,7 @@ video::-webkit-media-controls {
 
 .bg-blur {
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10.5px);
+  backdrop-filter: blur(10.5px) brightness(0.5);
   -webkit-backdrop-filter: blur(10.5px);
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;

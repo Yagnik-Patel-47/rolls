@@ -29,6 +29,7 @@ const ProfilePage: FC = () => {
     <>
       <Head>
         <title>Profile - Rolls It</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div className="flex bg-gray-800 h-full flex-col items-center p-6 space-y-8 text-white w-full">
         <Avatar

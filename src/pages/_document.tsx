@@ -13,11 +13,13 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
           <meta
             name="description"
             content="A social media app having features similar to Instagram."
           />
           <meta name="keywords" content="Reels Clone rolls" />
+          <meta http-equiv="X-UA-Compatible" content="ie=edge" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"

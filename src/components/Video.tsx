@@ -1,16 +1,24 @@
-import { FC, useRef, useEffect, useState } from "react";
-import { Avatar, ButtonBase, IconButton, Typography } from "@mui/material";
+import React, { FC, useRef, useEffect, useState, MouseEvent } from "react";
+import {
+  Avatar,
+  ButtonBase,
+  IconButton,
+  Typography,
+  Popover,
+  Button,
+} from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { db } from "../firebase";
+import { auth, db, storage } from "../firebase";
 import { Roll } from "../utils/interfaces";
 import { useInView } from "react-intersection-observer";
 import Modal from "./Modal";
 import { useAppDispatch, useAppSelector } from "../utils/reduxHooks";
 import { setModalState } from "../redux/modal";
 import firebase from "../firebase";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 interface Props {
   rollID: string;
@@ -39,14 +47,6 @@ const Video: FC<Props> = ({ rollID }: Props) => {
     photo: "",
   });
 
-  // const videoOperations = () => {
-  //   if (videoRef.current !== null && videoRef.current.paused) {
-  //     videoRef.current.play();
-  //   } else if (videoRef.current !== null && !videoRef.current.paused) {
-  //     videoRef.current.pause();
-  //   }
-  // };
-
   const pauseVideo = () => {
     if (videoRef.current !== null) {
       videoRef.current.pause();
@@ -57,6 +57,24 @@ const Video: FC<Props> = ({ rollID }: Props) => {
     if (videoRef.current !== null) {
       videoRef.current.play();
     }
+  };
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClickPopOver = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClosePopOver = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
+  const deleteRoll = () => {
+    db.collection("posts").doc(rollID).delete();
+    storage.ref(rollID).delete();
   };
 
   useEffect(() => {
@@ -122,25 +140,27 @@ const Video: FC<Props> = ({ rollID }: Props) => {
       style={{ scrollSnapAlign: "start" }}
       ref={ref}
     >
-      <video
-        width="100%"
-        height="100%"
-        loop
-        ref={videoRef}
-        onMouseDown={pauseVideo}
-        onMouseUp={resumeVideo}
-        onTouchStart={pauseVideo}
-        onTouchEnd={resumeVideo}
-        autoPlay
-        style={{ objectFit: "cover" }}
-        src={rollData.roll}
-        playsInline
-        onContextMenu={(e) => {
-          e.preventDefault();
-          return false;
-        }}
-      ></video>
-      <div className="flex flex-col p-2 space-y-2 absolute bottom-32 right-4">
+      {rollData.roll && (
+        <video
+          width="100%"
+          height="100%"
+          loop
+          ref={videoRef}
+          onMouseDown={pauseVideo}
+          onMouseUp={resumeVideo}
+          onTouchStart={pauseVideo}
+          onTouchEnd={resumeVideo}
+          autoPlay={inView}
+          style={{ objectFit: "cover" }}
+          src={rollData.roll}
+          playsInline
+          onContextMenu={(e) => {
+            e.preventDefault();
+            return false;
+          }}
+        ></video>
+      )}
+      <div className="flex flex-col p-2 space-y-2 absolute bottom-48 right-4">
         {rollData.likes.includes(profile.id) ? (
           <IconButton onClick={removeFromLiked}>
             <FavoriteIcon />
@@ -165,9 +185,36 @@ const Video: FC<Props> = ({ rollID }: Props) => {
         >
           <ChatOutlinedIcon />
         </IconButton>
-        <IconButton>
-          <MoreVertIcon />
-        </IconButton>
+        {rollData.userID === auth.currentUser?.uid && (
+          <IconButton aria-describedby={id} onClick={handleClickPopOver}>
+            <MoreVertIcon />
+          </IconButton>
+        )}
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClosePopOver}
+          anchorOrigin={{
+            vertical: "center",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "center",
+            horizontal: "right",
+          }}
+          marginThreshold={24}
+        >
+          <Button
+            style={{ outline: "none", color: "#fff" }}
+            startIcon={<DeleteForeverIcon />}
+            color="primary"
+            variant="contained"
+            onClick={deleteRoll}
+          >
+            Delete Post
+          </Button>
+        </Popover>
       </div>
       <div className="flex px-6 absolute items-center space-x-4 text-white top-8">
         <Avatar alt="profile image" src={user.photo} />

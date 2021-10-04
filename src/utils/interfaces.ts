@@ -2,7 +2,6 @@ export interface Profile {
   fullName: string;
   email: string;
   photo: string;
-  rolls: string[];
   id: string;
 }
 
